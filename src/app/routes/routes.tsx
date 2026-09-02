@@ -1,7 +1,8 @@
 import { createBrowserRouter, Outlet } from "react-router";
 
-import { MainLayout } from "../../entities/MainLayout";
+import { MainLayout } from "../../widgets/MainLayout";
 import { LoginPage } from "../../pages/LoginPage/index";
+import { HomePage } from "../../pages/HomePage";
 import { PATHS } from "../../shared/constants/paths";
 
 export const routes = createBrowserRouter([
@@ -12,10 +13,10 @@ export const routes = createBrowserRouter([
       </MainLayout>
     ),
     children: [
-      // {
-      //   path: PATHS.route.home,
-      //   element: <HomePage />,
-      // },
+      {
+        path: PATHS.route.home,
+        element: <HomePage />,
+      },
       {
         path: PATHS.route.login,
         element: <LoginPage />,
