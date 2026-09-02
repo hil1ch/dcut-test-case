@@ -8,6 +8,8 @@ interface IButtonTemplateProps {
   color?: string;
   size?: string;
   leftSection?: ReactNode;
+  classname?: string;
+  onClick?: () => void;
 }
 
 export const ButtonTemplate = ({
@@ -17,6 +19,8 @@ export const ButtonTemplate = ({
   color,
   size,
   leftSection,
+  classname,
+  onClick,
   ...restProps
 }: IButtonTemplateProps) => {
   return (
@@ -26,6 +30,8 @@ export const ButtonTemplate = ({
       color={color}
       size={size}
       leftSection={leftSection}
+      onClick={onClick}
+      className={classname}
       {...restProps}
     >
       {children}

@@ -1,6 +1,7 @@
 import { useForm } from "@mantine/form";
-import { SignInIcon, AtIcon, PasswordIcon } from "@phosphor-icons/react";
-import { Input, Button } from "@mantine/core";
+import { SignInIcon, AtIcon } from "@phosphor-icons/react";
+import { Input, Button, PasswordInput } from "@mantine/core";
+import { InputTemplate } from "../../shared/ui/InputTemplate";
 
 export const LoginForm = () => {
   const form = useForm({
@@ -28,25 +29,29 @@ export const LoginForm = () => {
     >
       <div className="flex flex-col items-center gap-2 mb-3 w-full">
         <Input.Wrapper label="Почта">
-          <Input
+          <InputTemplate
             placeholder="your@email.com"
-            leftSection={<AtIcon size={16} />}
             type="email"
-          ></Input>
+            value={""}
+            onChange={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            leftSection={<AtIcon size={16} />}
+            required
+          />
         </Input.Wrapper>
-        <Input.Wrapper label="Пароль">
-          <Input
-            placeholder="Введите пароль"
-            leftSection={<PasswordIcon size={16} />}
-            type="password"
-          ></Input>
-        </Input.Wrapper>
+        <PasswordInput
+          label="Пароль"
+          placeholder="Введите пароль"
+          className="w-full"
+          required
+        />
       </div>
       <Button
         fullWidth
         // disabled
         // loading
-        // loaderProps={{ type: "dots" }}
+        loaderProps={{ type: "dots" }}
         leftSection={<SignInIcon size={14} />}
         type="submit"
       >

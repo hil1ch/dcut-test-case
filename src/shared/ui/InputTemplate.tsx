@@ -1,17 +1,22 @@
 import { Input } from "@mantine/core";
+import type { ReactNode } from "react";
 
 interface IInputTemplateProps {
   placeholder: string;
   type: string;
   value: string;
+  required?: boolean;
+  leftSection?: ReactNode;
   onChange: () => void;
 }
 
-export const InputTenplate = ({
+export const InputTemplate = ({
   placeholder,
   type,
   value,
   onChange,
+  required,
+  leftSection,
   ...restProps
 }: IInputTemplateProps) => {
   return (
@@ -20,6 +25,8 @@ export const InputTenplate = ({
       type={type}
       value={value}
       onChange={onChange}
+      required={required}
+      leftSection={leftSection}
       {...restProps}
     />
   );
