@@ -1,75 +1,99 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Slide Flow
 
-Currently, two official plugins are available:
+SPA с имитацией аутентификации и интерактивной каруселью слайдов
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![React](https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
+![Mantine](https://img.shields.io/badge/UI-Mantine-339af0?logo=mantine&logoColor=white)
 
-## React Compiler
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## О проекте
 
-## Expanding the ESLint configuration
+Тестовое SPA-приложение, демонстрирующее полный пользовательский сценарий: вход в систему, просмотр коллекции слайдов и управление ею. Проект организован по методологии **Feature-Sliced Design (FSD)**, а состояние приложения сохраняется между перезагрузками страницы.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Возможности
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Аутентификация
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- отдельная страница входа по маршруту `/login`;
+- валидация email и пароля длиной от 3 символов;
+- имитация успешного входа с сохранением токена в `localStorage`;
+- защита главной страницы от неавторизованных пользователей;
+- автоматический переход авторизованного пользователя с `/login` на главную;
+- выход из приложения с очисткой сессии.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Карусель слайдов
 
+- четыре стартовых слайда с заголовком, аннотацией и статусом;
+- навигация стрелками и пагинация;
+- добавление слайда через модальное окно;
+- обязательное поле `title` при создании;
+- удаление слайда через модальное подтверждение;
+- сохранение списка слайдов в `localStorage`.
+
+## Технологии
+
+| Категория | Инструменты |
+| --- | --- |
+| UI | React, Mantine, Phosphor Icons |
+| Язык и сборка | TypeScript в strict-режиме, Vite |
+| Карусель | Embla Carousel |
+| Состояние | Redux Toolkit, React Redux, redux-persist |
+| Маршрутизация | React Router |
+| Стилизация | Mantine, Tailwind CSS, PostCSS |
+
+## Архитектура
+
+Структура проекта следует слоям FSD и направлению зависимостей от верхних слоёв к нижним:
+
+```text
+src/
+├── app/          # настройка приложения, маршрутизация и store
+├── pages/        # страницы Login и Home
+├── widgets/      # крупные блоки: layout и модальные окна
+├── features/     # пользовательские сценарии: auth и add-slide
+├── entities/     # бизнес-сущности: Slide
+└── shared/       # переиспользуемые UI-компоненты и константы
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Слои не импортируют модули из расположенных ниже слоёв напрямую в обратном направлении: бизнес-логика слайдов находится в `entities`, пользовательские действия над ней — в `features`, а композиция экранов — в `pages` и `widgets`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Запуск
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Требования: Node.js 18+ и npm.
 
+```bash
+npm install
+npm run dev
+```
+
+После запуска приложение будет доступно по адресу, который выведет Vite, обычно `http://localhost:5173`.
+
+## Скрипты
+
+```bash
+npm run dev      # локальная разработка
+npm run build    # проверка типов и production-сборка
+npm run lint     # проверка ESLint
+npm run preview  # просмотр production-сборки
+```
+
+## Персистентность
+
+Для хранения данных используется `redux-persist` с браузерным `localStorage`. Персистятся два раздела Redux store:
+
+- `auth` — признак авторизации и токен;
+- `slides` — текущий список слайдов.
+
+
+## Деплой
+
+Приложение подготовлено для публикации на **GitHub Pages**. Production-сборка создаётся командой:
+
+```bash
+npm run build
 ```
