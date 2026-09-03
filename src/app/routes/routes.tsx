@@ -4,6 +4,7 @@ import { MainLayout } from "../../widgets/MainLayout";
 import { LoginPage } from "../../pages/LoginPage/index";
 import { HomePage } from "../../pages/HomePage";
 import { PATHS } from "../../shared/constants/paths";
+import { AuthRoute } from "../../features/auth/AuthRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -15,11 +16,19 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: PATHS.route.home,
-        element: <HomePage />,
+        element: (
+          <AuthRoute requiresAuth>
+            <HomePage />
+          </AuthRoute>
+        ),
       },
       {
         path: PATHS.route.login,
-        element: <LoginPage />,
+        element: (
+          <AuthRoute requiresAuth={false}>
+            <LoginPage />
+          </AuthRoute>
+        ),
       },
     ],
   },

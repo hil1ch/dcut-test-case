@@ -1,5 +1,5 @@
 import { Input } from "@mantine/core";
-import type { ReactNode } from "react";
+import type { ChangeEventHandler, ReactNode } from "react";
 
 interface IInputTemplateProps {
   placeholder: string;
@@ -7,7 +7,8 @@ interface IInputTemplateProps {
   value: string;
   required?: boolean;
   leftSection?: ReactNode;
-  onChange: () => void;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  error?: ReactNode;
 }
 
 export const InputTemplate = ({
