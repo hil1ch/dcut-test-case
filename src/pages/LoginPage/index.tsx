@@ -1,5 +1,5 @@
 import { Title } from "@mantine/core";
-import { LoginForm } from "../../widgets/LoginForm";
+import { LoginForm } from "../../features/auth";
 
 export const LoginPage = () => {
   return (

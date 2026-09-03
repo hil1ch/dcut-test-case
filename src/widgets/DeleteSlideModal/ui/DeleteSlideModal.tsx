@@ -1,8 +1,7 @@
 import { Modal } from "@mantine/core";
-import { ButtonTemplate } from "../../shared/ui/ButtonTemplate";
+import { ButtonTemplate } from "../../../shared/ui/ButtonTemplate";
 import { useDispatch } from "react-redux";
-import { deleteSlide } from "../../features/add-slide/slices/slideSlice";
-import type { AppDispatch } from "../../app/providers/store/store";
+import { deleteSlide } from "../../../entities/Slide";
 
 interface IDeleteSlideModalProps {
   isOpenModal: boolean;
@@ -15,7 +14,7 @@ export const DeleteSlideModal = ({
   slideId,
   onClose,
 }: IDeleteSlideModalProps) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const handleDeleteSlide = () => {
     dispatch(deleteSlide(slideId));

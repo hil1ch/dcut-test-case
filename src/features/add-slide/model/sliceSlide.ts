@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Slide } from "../../../entities/Slide";
+import type { Slide } from "../../../entities/Slide/model/types";
 
-const initialState: Slide[] = [
+const initialSlides: Slide[] = [
   {
     id: 1,
     title: "Построение системы",
@@ -30,7 +30,7 @@ const initialState: Slide[] = [
 
 export const slideSlice = createSlice({
   name: "slides",
-  initialState,
+  initialState: initialSlides,
   reducers: {
     addSlide: (state, action: PayloadAction<Omit<Slide, "id">>) => {
       const nextId =

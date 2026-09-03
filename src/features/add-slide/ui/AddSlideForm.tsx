@@ -1,28 +1,20 @@
 import type { ChangeEvent } from "react";
 import { useForm } from "@mantine/form";
-import { InputTemplate } from "../../shared/ui/InputTemplate";
-import { Checkbox } from "@mantine/core";
-import { Textarea } from "@mantine/core";
-import { ButtonTemplate } from "../../shared/ui/ButtonTemplate";
+import { Checkbox, Textarea } from "@mantine/core";
+import { InputTemplate } from "../../../shared/ui/InputTemplate";
+import { ButtonTemplate } from "../../../shared/ui/ButtonTemplate";
 import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../app/providers/store/store";
-import { addSlide } from "../../features/add-slide/slices/slideSlice";
+import { addSlide } from "../../../entities/Slide";
 
-interface ModalFormProps {
+interface IAddSlideFormProps {
   onClose: () => void;
 }
 
-export const ModalForm = ({ onClose }: ModalFormProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-
+export const AddSlideForm = ({ onClose }: IAddSlideFormProps) => {
+  const dispatch = useDispatch();
   const form = useForm({
     mode: "controlled",
-    initialValues: {
-      title: "",
-      annotation: "",
-      isChecked: false,
-    },
-
+    initialValues: { title: "", annotation: "", isChecked: false },
     validate: {
       title: (value: string) =>
         value.trim().length > 0 ? null : "Заголовок не должен быть пустым",
@@ -35,11 +27,6 @@ export const ModalForm = ({ onClose }: ModalFormProps) => {
     onClose();
   };
 
-  const handleCancel = () => {
-    form.reset();
-    onClose();
-  };
-
   const handleInputChange =
     <Field extends keyof typeof form.values>(field: Field) =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,7 +35,6 @@ export const ModalForm = ({ onClose }: ModalFormProps) => {
         input instanceof HTMLInputElement && input.type === "checkbox"
           ? input.checked
           : input.value;
-
       form.setFieldValue(field, value as never);
     };
 
@@ -76,9 +62,15 @@ export const ModalForm = ({ onClose }: ModalFormProps) => {
         checked={form.values.isChecked}
         onChange={handleInputChange("isChecked")}
       />
-
       <div className="flex gap-2 justify-end mt-3">
-        <ButtonTemplate type="button" variant="default" onClick={handleCancel}>
+        <ButtonTemplate
+          type="button"
+          variant="default"
+          onClick={() => {
+            form.reset();
+            onClose();
+          }}
+        >
           Отмена
         </ButtonTemplate>
         <ButtonTemplate type="submit" variant="filled">

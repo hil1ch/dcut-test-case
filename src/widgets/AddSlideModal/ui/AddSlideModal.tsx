@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import { ModalForm } from "../ModalForm";
+import { AddSlideForm } from "../../../features/add-slide";
 
 interface IAddSlideModal {
   isOpenModal: boolean;
@@ -14,7 +14,7 @@ export const AddSlideModal = ({ isOpenModal, onClose }: IAddSlideModal) => {
       title="Добавить слайд"
       centered
     >
-      <ModalForm onClose={onClose} />
+      <AddSlideForm onClose={onClose} />
     </Modal>
   );
 };

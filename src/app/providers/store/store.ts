@@ -3,8 +3,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/es/storage";
 
-import slideReducer from "../../../features/add-slide/slices/slideSlice";
-import authReducer from "../../../features/auth/authSlice";
+import { slideReducer } from "../../../entities/Slide";
+import { authReducer } from "../../../features/auth";
 
 const persistConfig = {
   key: "root",

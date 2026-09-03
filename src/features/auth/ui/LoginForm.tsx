@@ -1,25 +1,20 @@
 import { useForm } from "@mantine/form";
 import { SignInIcon, AtIcon } from "@phosphor-icons/react";
 import { Input, Button, PasswordInput } from "@mantine/core";
-import { InputTemplate } from "../../shared/ui/InputTemplate";
+import { InputTemplate } from "../../../shared/ui/InputTemplate";
 import { useDispatch } from "react-redux";
 import { useState, type ChangeEvent } from "react";
-import type { AppDispatch } from "../../app/providers/store/store";
-import { signIn } from "../../features/auth/authSlice";
+import { signIn } from "../model/authSlice";
 
 const MOCK_AUTH_TOKEN = "mock-auth-token";
 
 export const LoginForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     mode: "controlled",
     validateInputOnChange: true,
-    initialValues: {
-      email: "",
-      password: "",
-    },
-
+    initialValues: { email: "", password: "" },
     validate: {
       email: (value: string) =>
         /^\S+@\S+$/.test(value) ? null : "Некорректная почта",
@@ -35,26 +30,18 @@ export const LoginForm = () => {
     await new Promise((resolve) => window.setTimeout(resolve, 500));
     dispatch(signIn(MOCK_AUTH_TOKEN));
     form.reset();
+    setIsLoading(false);
   };
 
-  const handleInputChange =
-    (field: keyof typeof form.values) =>
+  const handleInputChange = (field: keyof typeof form.values) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       form.setFieldValue(field, event.currentTarget.value);
     };
 
   return (
-    <form
-      noValidate
-      onSubmit={form.onSubmit(handleSubmit)}
-      className="mt-4 w-full"
-    >
+    <form noValidate onSubmit={form.onSubmit(handleSubmit)} className="mt-4 w-full">
       <div className="flex flex-col items-center gap-2 mb-3 w-full">
-        <Input.Wrapper
-          label="Почта"
-          error={form.errors.email}
-          className="w-full"
-        >
+        <Input.Wrapper label="Почта" error={form.errors.email} className="w-full">
           <InputTemplate
             placeholder="your@email.com"
             type="email"

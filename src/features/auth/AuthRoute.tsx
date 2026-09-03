@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
-import type { RootState } from "../../app/providers/store/store";
 import { PATHS } from "../../shared/constants/paths";
 
 interface AuthRouteProps {
@@ -11,7 +10,7 @@ interface AuthRouteProps {
 
 export const AuthRoute = ({ children, requiresAuth }: AuthRouteProps) => {
   const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated,
+    (state: { auth: { isAuthenticated: boolean } }) => state.auth.isAuthenticated,
   );
 
   if (requiresAuth && !isAuthenticated) {

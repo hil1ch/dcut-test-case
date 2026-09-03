@@ -1,58 +1,44 @@
 import type { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import { type Slide } from "../../entities/Slide";
-import { usePrevNextButtons } from "./CarouselArrowButtons";
+import { type Slide } from "../../../entities/Slide";
+import {
+  CarouselArrowButtons,
+  usePrevNextButtons,
+} from "./CarouselArrowButtons";
 import {
   SelectedSnapDisplay,
   useSelectedSnapDisplay,
 } from "./CarouselSelectedSnapDisplay";
-import { ActionIcon } from "@mantine/core";
-
-import { CaretRightIcon, CaretLeftIcon } from "@phosphor-icons/react";
 import { SlidesList } from "./SlidesList";
 
-type PropType = {
+type CarouselProps = {
   slides: Slide[];
   options?: EmblaOptionsType;
+  onDelete: (slideId: number) => void;
 };
 
-export const Carousel = (props: PropType) => {
-  const { slides, options } = props;
+export const Carousel = ({ slides, options, onDelete }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
-
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
     onNextButtonClick,
   } = usePrevNextButtons(emblaApi);
-
   const { selectedSnap, snapCount } = useSelectedSnapDisplay(emblaApi);
 
   return (
     <div className="max-w-3xl m-auto">
       <div className="overflow-hidden" ref={emblaRef}>
-        <SlidesList slides={slides} />
+        <SlidesList slides={slides} onDelete={onDelete} />
       </div>
-
       <div className="grid grid-cols-[auto_1fr] justify-between mt-2">
-        <div className="grid grid-cols-2 items-center gap-2">
-          <ActionIcon
-            variant="default"
-            onClick={onPrevButtonClick}
-            disabled={prevBtnDisabled}
-          >
-            <CaretLeftIcon />
-          </ActionIcon>
-          <ActionIcon
-            variant="default"
-            onClick={onNextButtonClick}
-            disabled={nextBtnDisabled}
-          >
-            <CaretRightIcon />
-          </ActionIcon>
-        </div>
-
+        <CarouselArrowButtons
+          prevBtnDisabled={prevBtnDisabled}
+          nextBtnDisabled={nextBtnDisabled}
+          onPrevButtonClick={onPrevButtonClick}
+          onNextButtonClick={onNextButtonClick}
+        />
         <SelectedSnapDisplay
           selectedSnap={selectedSnap}
           snapCount={snapCount}
