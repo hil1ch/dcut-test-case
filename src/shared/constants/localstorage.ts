@@ -1,0 +1,1 @@
+export const MOCK_AUTH_TOKEN = "mock-auth-token";

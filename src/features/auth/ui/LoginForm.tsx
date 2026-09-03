@@ -5,8 +5,7 @@ import { InputTemplate } from "../../../shared/ui/InputTemplate";
 import { useDispatch } from "react-redux";
 import { useState, type ChangeEvent } from "react";
 import { signIn } from "../model/authSlice";
-
-const MOCK_AUTH_TOKEN = "mock-auth-token";
+import { MOCK_AUTH_TOKEN } from "../../../shared/constants/localstorage";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -33,15 +32,24 @@ export const LoginForm = () => {
     setIsLoading(false);
   };
 
-  const handleInputChange = (field: keyof typeof form.values) =>
+  const handleInputChange =
+    (field: keyof typeof form.values) =>
     (event: ChangeEvent<HTMLInputElement>) => {
       form.setFieldValue(field, event.currentTarget.value);
     };
 
   return (
-    <form noValidate onSubmit={form.onSubmit(handleSubmit)} className="mt-4 w-full">
+    <form
+      noValidate
+      onSubmit={form.onSubmit(handleSubmit)}
+      className="mt-4 w-full"
+    >
       <div className="flex flex-col items-center gap-2 mb-3 w-full">
-        <Input.Wrapper label="Почта" error={form.errors.email} className="w-full">
+        <Input.Wrapper
+          label="Почта"
+          error={form.errors.email}
+          className="w-full"
+        >
           <InputTemplate
             placeholder="your@email.com"
             type="email"
