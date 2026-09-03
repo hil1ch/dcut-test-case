@@ -5,7 +5,7 @@ import { InputTemplate } from "../../shared/ui/InputTemplate";
 import { useDispatch } from "react-redux";
 import { useState, type ChangeEvent } from "react";
 import type { AppDispatch } from "../../app/providers/store/store";
-import { AUTH_TOKEN_STORAGE_KEY, signIn } from "../../features/auth/login";
+import { AUTH_TOKEN_STORAGE_KEY, signIn } from "../../features/auth/authSlice";
 
 const MOCK_AUTH_TOKEN = "mock-auth-token";
 

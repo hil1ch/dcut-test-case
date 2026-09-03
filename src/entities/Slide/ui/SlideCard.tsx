@@ -12,9 +12,8 @@ type SlideCardProps = {
 export const SlideCard = ({ slide }: SlideCardProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const handleDeleteModal = () => {
-    setIsOpenModal((prev) => !prev);
-  };
+  const openDeleteModal = () => setIsOpenModal(true);
+  const closeDeleteModal = () => setIsOpenModal(false);
 
   return (
     <>
@@ -35,13 +34,19 @@ export const SlideCard = ({ slide }: SlideCardProps) => {
           type="button"
           size="xs"
           leftSection={<TrashIcon size={16} />}
-          onClick={handleDeleteModal}
+          onClick={openDeleteModal}
         >
           Удалить
         </ButtonTemplate>
       </Card>
 
-      {isOpenModal && <DeleteSlideModal isOpenModal={isOpenModal} />}
+      {isOpenModal && (
+        <DeleteSlideModal
+          isOpenModal={isOpenModal}
+          slideId={slide.id}
+          onClose={closeDeleteModal}
+        />
+      )}
     </>
   );
 };

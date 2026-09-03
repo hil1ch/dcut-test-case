@@ -2,7 +2,7 @@ import { ButtonTemplate } from "../../shared/ui/ButtonTemplate";
 import { SignOutIcon, PlusIcon } from "@phosphor-icons/react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../app/providers/store/store";
-import { signOut } from "../../features/auth/login";
+import { signOut } from "../../features/auth/authSlice";
 
 interface IHomePageHeaderProps {
   handleAddSlideModal: () => void;
