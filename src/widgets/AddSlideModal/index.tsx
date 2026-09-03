@@ -3,19 +3,18 @@ import { ModalForm } from "../ModalForm";
 
 interface IAddSlideModal {
   isOpenModal: boolean;
+  onClose: () => void;
 }
 
-export const AddSlideModal = ({ isOpenModal }: IAddSlideModal) => {
+export const AddSlideModal = ({ isOpenModal, onClose }: IAddSlideModal) => {
   return (
     <Modal
       opened={isOpenModal}
-      onClose={function (): void {
-        throw new Error("Function not implemented.");
-      }}
+      onClose={onClose}
       title="Добавить слайд"
       centered
     >
-      <ModalForm />
+      <ModalForm onClose={onClose} />
     </Modal>
   );
 };

@@ -32,9 +32,10 @@ export const slideSlice = createSlice({
   name: "slides",
   initialState,
   reducers: {
-    // resetSlides: () => initialState,
-    addSlide: (state, action: PayloadAction<Slide>) => {
-      state.push(action.payload);
+    addSlide: (state, action: PayloadAction<Omit<Slide, "id">>) => {
+      const nextId =
+        state.length === 0 ? 1 : Math.max(...state.map(({ id }) => id)) + 1;
+      state.unshift({ id: nextId, ...action.payload });
     },
     deleteSlide: (state, action: PayloadAction<number>) => {
       return state.filter((slide) => slide.id !== action.payload);
@@ -42,5 +43,5 @@ export const slideSlice = createSlice({
   },
 });
 
-export const { /* resetSlides */ addSlide, deleteSlide } = slideSlice.actions;
+export const { addSlide, deleteSlide } = slideSlice.actions;
 export default slideSlice.reducer;

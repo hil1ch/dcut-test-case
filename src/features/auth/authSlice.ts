@@ -1,25 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const AUTH_TOKEN_STORAGE_KEY = "authToken";
-
 interface AuthState {
   isAuthenticated: boolean;
+  token: string | null;
 }
 
 const initialState: AuthState = {
-  isAuthenticated: Boolean(localStorage.getItem(AUTH_TOKEN_STORAGE_KEY)),
+  isAuthenticated: false,
+  token: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signIn: (state) => {
+    signIn: (state, action: { payload: string }) => {
       state.isAuthenticated = true;
+      state.token = action.payload;
     },
     signOut: (state) => {
       state.isAuthenticated = false;
-      localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY);
+      state.token = null;
     },
   },
 });

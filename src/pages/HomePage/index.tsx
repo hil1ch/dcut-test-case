@@ -12,16 +12,17 @@ export const HomePage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const slides = useSelector((state: RootState) => state.slides);
 
-  const handleAddSlideModal = () => {
-    setIsOpenModal((prev) => !prev);
-  };
+  const openAddSlideModal = () => setIsOpenModal(true);
+  const closeAddSlideModal = () => setIsOpenModal(false);
 
   return (
     <div>
-      <HomePageHeader handleAddSlideModal={handleAddSlideModal} />
+      <HomePageHeader handleAddSlideModal={openAddSlideModal} />
       <Carousel slides={slides} options={OPTIONS} />
 
-      {isOpenModal && <AddSlideModal isOpenModal={isOpenModal} />}
+      {isOpenModal && (
+        <AddSlideModal isOpenModal={isOpenModal} onClose={closeAddSlideModal} />
+      )}
     </div>
   );
 };

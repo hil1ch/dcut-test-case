@@ -5,7 +5,7 @@ import { InputTemplate } from "../../shared/ui/InputTemplate";
 import { useDispatch } from "react-redux";
 import { useState, type ChangeEvent } from "react";
 import type { AppDispatch } from "../../app/providers/store/store";
-import { AUTH_TOKEN_STORAGE_KEY, signIn } from "../../features/auth/authSlice";
+import { signIn } from "../../features/auth/authSlice";
 
 const MOCK_AUTH_TOKEN = "mock-auth-token";
 
@@ -33,8 +33,7 @@ export const LoginForm = () => {
   const handleSubmit = async () => {
     setIsLoading(true);
     await new Promise((resolve) => window.setTimeout(resolve, 500));
-    localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, MOCK_AUTH_TOKEN);
-    dispatch(signIn());
+    dispatch(signIn(MOCK_AUTH_TOKEN));
     form.reset();
   };
 
