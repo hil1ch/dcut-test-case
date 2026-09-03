@@ -1,6 +1,6 @@
 import type { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
-import { SlideCard, type Slide } from "../../entities/Slide";
+import { type Slide } from "../../entities/Slide";
 import { usePrevNextButtons } from "./CarouselArrowButtons";
 import {
   SelectedSnapDisplay,
@@ -9,13 +9,14 @@ import {
 import { ActionIcon } from "@mantine/core";
 
 import { CaretRightIcon, CaretLeftIcon } from "@phosphor-icons/react";
+import { SlidesList } from "./SlidesList";
 
 type PropType = {
   slides: Slide[];
   options?: EmblaOptionsType;
 };
 
-const EmblaCarousel = (props: PropType) => {
+export const Carousel = (props: PropType) => {
   const { slides, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
@@ -31,13 +32,7 @@ const EmblaCarousel = (props: PropType) => {
   return (
     <div className="max-w-3xl m-auto">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex items-stretch gap-2">
-          {slides.map((slide) => (
-            <div className="min-w-0 flex-1" key={slide.id}>
-              <SlideCard slide={slide} />
-            </div>
-          ))}
-        </div>
+        <SlidesList slides={slides} />
       </div>
 
       <div className="grid grid-cols-[auto_1fr] justify-between mt-2">
@@ -66,5 +61,3 @@ const EmblaCarousel = (props: PropType) => {
     </div>
   );
 };
-
-export default EmblaCarousel;

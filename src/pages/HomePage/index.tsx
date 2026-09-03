@@ -1,10 +1,9 @@
 import { useState } from "react";
 import type { EmblaOptionsType } from "embla-carousel";
 import { type Slide } from "../../entities/Slide";
-import EmblaCarousel from "./Carousel";
-import { ButtonTemplate } from "../../shared/ui/ButtonTemplate";
+import { Carousel } from "./Carousel";
 import { AddSlideModal } from "../../widgets/AddSlideModal";
-import { PlusIcon, SignOutIcon } from "@phosphor-icons/react";
+import { HomePageHeader } from "./HomePageHeader";
 
 const OPTIONS: EmblaOptionsType = { dragFree: true };
 
@@ -38,32 +37,14 @@ const SLIDES: Slide[] = [
 export const HomePage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const handleAddModal = () => {
+  const handleAddSlideModal = () => {
     setIsOpenModal((prev) => !prev);
   };
 
   return (
     <div>
-      <div className="flex gap-2 mb-2 justify-between">
-        <ButtonTemplate
-          type="button"
-          variant="outline"
-          color="red"
-          leftSection={<SignOutIcon size={16} />}
-          // onClick={handleAddModal}
-        >
-          Выйти
-        </ButtonTemplate>
-        <ButtonTemplate
-          type="button"
-          variant="default"
-          leftSection={<PlusIcon size={16} />}
-          onClick={handleAddModal}
-        >
-          Добавить
-        </ButtonTemplate>
-      </div>
-      <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+      <HomePageHeader handleAddSlideModal={handleAddSlideModal} />
+      <Carousel slides={SLIDES} options={OPTIONS} />
 
       {isOpenModal && <AddSlideModal isOpenModal={isOpenModal} />}
     </div>
