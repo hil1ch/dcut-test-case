@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from "react-router";
+import { createHashRouter, Outlet } from "react-router";
 
 import { MainLayout } from "../../widgets/MainLayout";
 import { LoginPage } from "../../pages/LoginPage";
@@ -6,7 +6,7 @@ import { HomePage } from "../../pages/HomePage";
 import { PATHS } from "../../shared/constants/paths";
 import { AuthRoute } from "../../features/auth";
 
-export const routes = createBrowserRouter([
+export const routes = createHashRouter([
   {
     element: (
       <MainLayout>
